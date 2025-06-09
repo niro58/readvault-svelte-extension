@@ -135,6 +135,6 @@
   </Tabs.Root>
 </div>
 <div
-  class="mt-2 px-2 h-32 flex flex-col-reverse items-stretch justify-start absolute bottom-0 w-full"
+  class="mt-2 px-2 h-32 flex pointer-events-none flex-col-reverse items-stretch justify-start absolute bottom-0 w-full"
   id="messages"
 ></div>
