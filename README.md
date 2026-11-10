@@ -1,47 +1,42 @@
-# Svelte + TS + Vite
+# ReadVault
 
-This template should help get you started developing with Svelte and TypeScript in Vite.
+A Chrome extension for your reading list. While you are on a page you want to read later, open the extension, pick a folder and press Add. The page is saved with its title and icon, and you find it again in the popup.
 
-## Recommended IDE Setup
+## What it does
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+- **Save the page you are on** into a folder you choose or create.
+- **Folders** you can open, close, rename and delete, each showing its saved pages.
+- **Three lists:** *All* (your folders), *Urgent* (pages you marked urgent, from every folder) and *Archive* (pages you have read).
+- **Mark** a page as urgent or as read from its menu, or delete it.
+- **Shows you if the current page is already saved.**
+- A short built-in **FAQ** inside the popup.
 
-## Need an official Svelte framework?
+Your list is stored in your browser (in IndexedDB) and is not sent anywhere. The extension makes no network requests of its own. The flip side is that the list does not sync between devices, and you cannot drag items to reorder them: they show in the order you added them.
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+The only permission it asks for is `tabs`, to read the title and address of the page you are on.
 
-## Technical considerations
+## Install it from source
 
-**Why use this over SvelteKit?**
+You need Node and a Chromium-based browser (Chrome, Edge, Brave).
 
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
-
-This template contains as little as possible to get started with Vite + TypeScript + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
-
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
-
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
-
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
-
-**Why include `.vscode/extensions.json`?**
-
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
-
-**Why enable `allowJs` in the TS template?**
-
-While `allowJs: false` would indeed prevent the use of `.js` files in the project, it does not prevent the use of JavaScript syntax in `.svelte` files. In addition, it would force `checkJs: false`, bringing the worst of both worlds: not being able to guarantee the entire codebase is TypeScript, and also having worse typechecking for the existing JavaScript. In addition, there are valid use cases in which a mixed codebase may be relevant.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```ts
-// store.ts
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
 ```
+npm install
+npm run build
+```
+
+Then open `chrome://extensions`, switch on **Developer mode**, choose **Load unpacked** and pick the `dist` folder.
+
+For development, `npm run dev` starts Vite with hot reload on port 5177. Load the `dist` folder the same way. In `manifest.config.ts` there is a commented-out `host_permissions` line that hot reload may need; keep it off for a real build.
+
+`npm run check` runs the type checks. There are no tests.
+
+## Built with
+
+Svelte 5, TypeScript, Vite with the CRXJS plugin, Tailwind CSS 4, shadcn-svelte (bits-ui). A Manifest V3 extension.
+
+## Status
+
+It works as a small, finished first version (the last feature change was in March 2025), but it is a hobby project, not a polished product. Known loose ends:
+
+- No sync, no reordering, no import or export.
+- The `package.json` name is still `website-blocker-svelte-extension`, left over from the project this one was started from.
